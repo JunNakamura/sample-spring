@@ -1,11 +1,11 @@
 package com.example.sample.domain.book;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.sample.logging.CRUDEntityListener;
+
+import javax.persistence.*;
 
 @Entity
+@EntityListeners(CRUDEntityListener.class)
 public class Book {
 
     @Id
