@@ -10,12 +10,19 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
-    public BookService(BookRepository bookRepository) {
+    private final BookJdbcTemplateRepository jdbcTemplateRepository;
+
+    public BookService(BookRepository bookRepository, BookJdbcTemplateRepository jdbcTemplateRepository) {
         this.bookRepository = bookRepository;
+        this.jdbcTemplateRepository = jdbcTemplateRepository;
     }
 
     List<Book> findAll() {
         return bookRepository.findAll();
+    }
+
+    List<String> findAllTitles() {
+        return jdbcTemplateRepository.findAllTitles();
     }
 
     long create(String title) {

@@ -24,6 +24,11 @@ public class BookController {
         return Books.of(books);
     }
 
+    @GetMapping("titles")
+    public List<String> findAllTitles() {
+        return bookService.findAllTitles();
+    }
+
     @PostMapping
     public long create(@RequestParam("title") String title) {
         return bookService.create(title);

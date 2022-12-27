@@ -27,12 +27,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-
 	modules {
 		module('org.springframework.boot:spring-boot-starter-logging') {
 			replacedBy 'org.springframework.boot:spring-boot-starter-log4j2'
 		}
 	}
+
+	implementation group: 'net.ttddyy', name: 'datasource-proxy', version: '1.8.1'
+
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
