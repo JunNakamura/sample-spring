@@ -25,6 +25,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 
 	modules {
 		module('org.springframework.boot:spring-boot-starter-logging') {

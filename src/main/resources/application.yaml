@@ -5,3 +5,6 @@ spring:
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
     sql-script-encoding: utf-8
+
+server:
+  port: 8888
