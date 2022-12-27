@@ -12,44 +12,38 @@ import java.util.Optional;
 @RequestMapping("books")
 public class BookController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @GetMapping
     public Books findAll() {
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookService.findAll();
         return Books.of(books);
     }
 
     @PostMapping
     public long create(@RequestParam("title") String title) {
-        Book book = new Book(title);
-        Book savedBook = bookRepository.save(book);
-        return savedBook.getId();
+        return bookService.create(title);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> findById(@PathVariable("id") long id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Optional<Book> book = bookService.findById(id);
         return ResponseEntity.of(book);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> update(@PathVariable("id") long id, @RequestParam("title") String title) {
-        Optional<Book> book = bookRepository.findById(id);
-        book.ifPresent(x -> {
-            x.setTitle(title);
-            bookRepository.save(x);
-        });
+        Optional<Book> book = bookService.update(id, title);
         return ResponseEntity.of(book);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") long id) {
-        bookRepository.deleteById(id);
+        bookService.delete(id);
         return ResponseEntity.ok().build();
     }
 
