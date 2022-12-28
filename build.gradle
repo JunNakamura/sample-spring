@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.ysb33r.doxygen" version "1.0.0-alpha.2"
 }
 
 group = 'com.example'
@@ -12,6 +13,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	umlDoclet
 }
 
 repositories {
@@ -35,12 +37,22 @@ dependencies {
 
 	implementation group: 'net.ttddyy', name: 'datasource-proxy', version: '1.8.1'
 
-
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	umlDoclet "nl.talsmasoftware:umldoclet:1.1.5"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+javadoc {
+	source = sourceSets.main.allJava
+	options.docletpath = configurations.umlDoclet.files.asType(List)
+	options.doclet = "nl.talsmasoftware.umldoclet.UMLDoclet"
+	options.addStringOption "umlIncludePackagePrivateMethods", "true"
+}
+

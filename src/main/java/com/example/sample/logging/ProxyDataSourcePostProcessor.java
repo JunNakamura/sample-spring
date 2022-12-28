@@ -40,14 +40,16 @@ public class ProxyDataSourcePostProcessor implements BeanPostProcessor {
         return new NoOpQueryExecutionListener(){
             @Override
             public void afterQuery(ExecutionInfo execInfo, List<QueryInfo> queryInfoList) {
-                List<String> callTree = Arrays.stream(Thread.currentThread().getStackTrace())
+                 List<String> callTree = Arrays.stream(Thread.currentThread().getStackTrace())
                         .filter(x -> x.getClassName().startsWith(SampleApplication.class.getPackage().getName()))
                         .map(x -> x.getClassName() + "." + x.getMethodName())
                         .skip(1) // skip call tree due to this class
                         .peek(logger::debug)
                         .collect(Collectors.toList());
-                List<String> queries = queryInfoList.stream().map(QueryInfo::getQuery).collect(Collectors.toList());
-                logger.info("queries: {} called by {}", queries, callTree);
+                queryInfoList.stream().forEach(queryInfo -> {
+                    logger.info("query: {} called by {}", queryInfo.getQuery(), callTree);
+                });
+
             }
         };
     }
